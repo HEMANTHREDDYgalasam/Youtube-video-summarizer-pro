@@ -27,11 +27,17 @@ from utils import (
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Bootstrap — Load API key from environment (never exposed to the user)
+#
+# Dual-source strategy for deployment flexibility:
+#   1. st.secrets  → used on Streamlit Community Cloud (set via app dashboard)
+#   2. os.getenv   → used locally via the .env file loaded by python-dotenv
 # ─────────────────────────────────────────────────────────────────────────────
 
-load_dotenv(override=True)  # Load .env file with override=True to support updates
+# Load .env for local development (no-op on Streamlit Cloud where .env is absent)
+load_dotenv(override=True)
 
-GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY", "")
+# Prefer Streamlit Secrets (cloud deployment); fall back to .env / system env var
+GOOGLE_API_KEY: str = st.secrets.get("GOOGLE_API_KEY") or os.getenv("GOOGLE_API_KEY", "")
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Page Configuration
@@ -439,8 +445,10 @@ if clear_btn:
 # ── Regenerate handler (reuse stored data) ───────────────────────────────────
 
 if regen_btn and st.session_state.get("transcript"):
+    # Refresh .env for local dev; Streamlit Cloud secrets are always available
     load_dotenv(override=True)
-    api_key_to_use = os.getenv("GOOGLE_API_KEY", "")
+    # Prefer Streamlit Secrets (cloud); fall back to .env / system env var (local)
+    api_key_to_use = st.secrets.get("GOOGLE_API_KEY") or os.getenv("GOOGLE_API_KEY", "")
     if not api_key_to_use:
         st.error("⚙️ Server configuration error. Please contact the administrator.")
     else:
@@ -469,8 +477,10 @@ if summarize_btn:
         st.error("❌ Please paste a YouTube URL to get started.")
         st.stop()
 
+    # Refresh .env for local dev; Streamlit Cloud secrets are always available
     load_dotenv(override=True)
-    api_key_to_use = os.getenv("GOOGLE_API_KEY", "")
+    # Prefer Streamlit Secrets (cloud); fall back to .env / system env var (local)
+    api_key_to_use = st.secrets.get("GOOGLE_API_KEY") or os.getenv("GOOGLE_API_KEY", "")
     if not api_key_to_use:
         st.error("⚙️ Server configuration error. Please contact the administrator.")
         st.stop()
