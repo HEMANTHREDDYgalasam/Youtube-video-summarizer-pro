@@ -1,0 +1,29 @@
+# ============================================================
+# YouTube Video Summarizer Pro - Python Dependencies
+# Python >= 3.10 required
+# Install: pip install -r requirements.txt
+# ============================================================
+
+# ── Core Web Framework ──────────────────────────────────────
+streamlit>=1.40.0
+
+# ── Google Gemini AI SDK (newest, non-deprecated) ───────────
+google-genai>=1.0.0
+
+# ── YouTube Transcript ──────────────────────────────────────
+youtube-transcript-api>=1.0.0  # v1.x uses instance-based API: YouTubeTranscriptApi().list()
+
+# ── Environment Variable Loader ─────────────────────────────
+python-dotenv>=1.0.1
+
+# ── HTTP Client (thumbnail resolution check) ────────────────
+requests>=2.32.3
+
+# ── DOCX Export ─────────────────────────────────────────────
+python-docx>=1.1.2
+
+# ── PDF Export ──────────────────────────────────────────────
+reportlab>=4.2.5
+
+# ── Image Handling (Streamlit dependency) ───────────────────
+Pillow>=11.0.0

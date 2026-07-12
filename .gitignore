@@ -1,0 +1,42 @@
+# Git ignore file for YouTube Video Summarizer Pro
+
+# ── Secrets & environment ──────────────────────────────
+.env
+*.env.local
+
+# ── Python cache ────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.Python
+
+# ── Virtual environments ────────────────────────────────
+venv/
+.venv/
+env/
+ENV/
+
+# ── Streamlit ───────────────────────────────────────────
+.streamlit/secrets.toml
+
+# ── Distribution / packaging ────────────────────────────
+dist/
+build/
+*.egg-info/
+
+# ── IDE ─────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Downloads (generated files) ─────────────────────────
+downloads/*.txt
+downloads/*.pdf
+downloads/*.docx
+
+# ── Logs ────────────────────────────────────────────────
+*.log
